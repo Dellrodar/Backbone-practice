@@ -1,35 +1,48 @@
+// Making our first Model. We extend Backbone.Model
 var Song = Backbone.Model.extend({
+  // Runs once a Model is initialized.
   initialize: function () {
     console.log("A new song has been created.")
   },
+  // Default attributes set to each Song Model created
   defaults: {
     downloads: 0,
     genre: "Jazz",
     listeners: 0
   },
+  // Validation function to ensure each new Song has a title.
   validate: function (attrs) {
     if (!attrs.title)
       return "Title is required.";
   }
 });
+
+// Our first Collection. A Collection is a group of Models. It is extended from Backbone.Collection
 var Songs = Backbone.Collection.extend({
   model: Song
 });
 
+// New Songs to add to our collection
 var songs = new Songs([
-  new Song({ title: "Drowning in my code" }),
-  new Song({ title: "Coffee is love and life" }),
-  new Song({ title: "Java made the code go down" })
+  new Song({ id: 1, title: "Drowning in my code" }),
+  new Song({ id: 2, title: "Coffee is love and life" }),
+  new Song({ id: 3, title: "Java made the code go down" })
 ]);
 
-songs.add(new Song({ title: "This is only a test." }));
-songs.add(new Song({ title: "Gaining a backbone", genre: "Rock", downloads: 9001 }), { at: 0 });
+// Songs can be added using the ".add()" function. Each new song will require an title based on our validation.
+songs.add(new Song({ id: 4, title: "This is only a test." }));
+songs.add(new Song({ id: 5, title: "Gaining a backbone", genre: "Rock", downloads: 9001 }), { at: 0 });
 
-songs.push(new Song({ title: "Gaining the knowledge...", genre: "Classical", downloads: 100 }));
+// ".push" can also be used to add songs.
+songs.push(new Song({ id: 6, title: "Gaining the knowledge...", genre: "Classical", downloads: 100 }));
 
+// ".where" can be used to find all songs with the genre of Jazz on the page.
 var jazzSongs = songs.where({ genre: "Jazz" });
+
+// ".findWhere" will find the first item the matches the genre
 var firstJazzSong = songs.findWhere({ genre: "Jazz" });
 
+// returning each function
 console.log("Jazz Songs", jazzSongs);
 console.log("First Jazz Song", firstJazzSong);
 
@@ -75,7 +88,7 @@ var SongView = Backbone.View.extend({
   tagName: "li",
   className: "song",
 
-  initialize: function() {
+  initialize: function () {
     this.model.on("change", this.render, this);
   },
   events: {
@@ -91,7 +104,10 @@ var SongView = Backbone.View.extend({
     console.log("Bookmark Clicked")
   },
   render: function () {
-    this.$el.html(this.model.get("title") + " <button>Listen</button> <button class='bookmark'>Bookmark</button>" + " - Listeners: " + this.model.get("listeners"));
+    var template = _.template($("#songTemplate").html());
+    var html = template(this.model.toJSON());
+    this.$el.html(html + " - Listeners: " + this.model.get("listeners"));
+    this.$el.attr("id", this.model.id);
     return this;
   }
 });
@@ -99,18 +115,18 @@ var SongView = Backbone.View.extend({
 var SongsView = Backbone.View.extend({
   tagName: "ul",
 
-  initialize: function() {
+  initialize: function () {
     this.model.on("add", this.onSongAdded, this);
     this.model.on("remove", this.onSongRemoved, this);
   },
 
-  onSongAdded: function(song) {
+  onSongAdded: function (song) {
     var songView = new songView({ model: song });
     this.$el.append(songView)
   },
 
-  onSongRemoved: function () {
-    this.$("li#" + song.id).remove();
+  onSongRemoved: function (song) {
+    this.$el.find("#li" + song.id).remove();
   },
 
   render: function () {
@@ -123,11 +139,11 @@ var SongsView = Backbone.View.extend({
   }
 });
 
-var songView = new SongView({ el: "#song", model: song});
+var songView = new SongView({ el: "#song", model: song });
 songView.render();
 
-var songsView = new SongsView({ el: "#songs", model: songs });
-songsView.render();
+// var songsView = new SongsView({ el: "#songs", model: songs });
+// songsView.render();
 
 
 //combined example
