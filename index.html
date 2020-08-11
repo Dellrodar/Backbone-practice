@@ -16,9 +16,6 @@
     <body>
         <ul id="song"></ul>
         <ul id="songs"></ul>
-        <script src="js/lib/jquery-min.js"></script>
-        <script src="js/lib/underscore-min.js"></script>
-        <script src="js/lib/backbone-min.js"></script>
         <script id="songTemplate" type="text/html">
             <%= title %>
             <button>Listen</button>
@@ -26,7 +23,7 @@
             <% if (downloads > 1000){ %>
                 <span class="popular">Popular</span>
             <% } %>
-        </script>
-        <script src="js/main.js"></script>
+            </script>
+        <script src="js/lib/require-min.js" data-main="js/main"></script>
     </body>
 </html>
