@@ -14,7 +14,7 @@ var person = {
 _.extend(person, Backbone.Events);
 
 //subbing to events
-person.on("walking", function (e){
+  person.on("walking", function (e){
   console.log("Person is walking...");
   console.log("Event Args", e);
 });
