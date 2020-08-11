@@ -3,68 +3,72 @@ define([
   'backbone',
   'models/song',
   'views/songView',
-  'collections/songs'
-], function (_, Backbone, Song, SongView, Songs) {
+  'collections/songs',
+  'views/songsView'],
 
-  var initialize = function () {
-    var song = new Song({
-      title: "Blue in Green",
-      artist: "Miles Davis",
-      publishYear: 1959
-    });
+  function (_, Backbone, Song, SongView, Songs, SongsView) {
 
-    var lastError = song.validationError;
+    var initialize = function () {
+      var song = new Song({
+        title: "Blue in Green",
+        artist: "Miles Davis",
+        publishYear: 1959
+      });
 
-    var songView = new SongView({ el: "#song", model: song });
-    songView.render();
+      var lastError = song.validationError;
 
-    // New Songs to add to our collection
-    var songs = new Songs([
-      new Song({ id: 1, title: "Drowning in my code" }),
-      new Song({ id: 2, title: "Coffee is love and life" }),
-      new Song({ id: 3, title: "Java made the code go down" })
-    ]);
+      var songView = new SongView({ el: "#song", model: song });
+      songView.render();
 
-    // Songs can be added using the ".add()" function. Each new song will require an title based on our validation.
-    songs.add(new Song({ id: 4, title: "This is only a test." }));
-    songs.add(new Song({ id: 5, title: "Gaining a backbone", genre: "Rock", downloads: 9001 }), { at: 0 });
+      // New Songs to add to our collection
+      var songs = new Songs([
+        new Song({ id: 1, title: "Drowning in my code" }),
+        new Song({ id: 2, title: "Coffee is love and life" }),
+        new Song({ id: 3, title: "Java made the code go down" })
+      ]);
 
-    // ".push" can also be used to add songs.
-    songs.push(new Song({ id: 6, title: "Gaining the knowledge...", genre: "Classical", downloads: 100 }));
+      // Songs can be added using the ".add()" function. Each new song will require an title based on our validation.
+      songs.add(new Song({ id: 4, title: "This is only a test." }));
+      songs.add(new Song({ id: 5, title: "Gaining a backbone", genre: "Rock", downloads: 9001 }), { at: 0 });
 
-    // ".where" can be used to find all songs with the genre of Jazz on the page.
-    var jazzSongs = songs.where({ genre: "Jazz" });
+      // ".push" can also be used to add songs.
+      songs.push(new Song({ id: 6, title: "Gaining the knowledge...", genre: "Classical", downloads: 100 }));
 
-    // ".findWhere" will find the first item the matches the genre
-    var firstJazzSong = songs.findWhere({ genre: "Jazz" });
+      // ".where" can be used to find all songs with the genre of Jazz on the page.
+      var jazzSongs = songs.where({ genre: "Jazz" });
 
-    // returning each function
-    console.log("Jazz Songs", jazzSongs);
-    console.log("First Jazz Song", firstJazzSong);
+      // ".findWhere" will find the first item the matches the genre
+      var firstJazzSong = songs.findWhere({ genre: "Jazz" });
 
-    var filteredSongs = songs.where({ genre: "Jazz", title: "Drowning in my code" });
-    console.log("Filtered Songs", filteredSongs);
+      // returning each function
+      console.log("Jazz Songs", jazzSongs);
+      console.log("First Jazz Song", firstJazzSong);
 
-    var topDownloads = songs.filter(function (song) {
-      return song.get("downloads") > 100;
-    })
+      var filteredSongs = songs.where({ genre: "Jazz", title: "Drowning in my code" });
+      console.log("Filtered Songs", filteredSongs);
 
-    console.log("Top Downloads", topDownloads);
+      var topDownloads = songs.filter(function (song) {
+        return song.get("downloads") > 100;
+      })
 
-    songs.each(function (song) {
-      console.log(song);
-    });
+      console.log("Top Downloads", topDownloads);
 
-  };
+      songs.each(function (song) {
+        console.log(song);
+      });
 
-  return {
-    initialize: initialize
-  };
+      var songsView = new SongsView({ el: "#songs", model: songs });
+      songsView.render();
 
-})
+    };
 
-var songsView = new SongsView({ el: "#songs", model: songs });
-songsView.render();
+    return {
+      initialize: initialize
+    };
+
+  })
+
+
 
 
 var dog = new Dog();
