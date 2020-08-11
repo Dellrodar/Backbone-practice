@@ -4,9 +4,10 @@ define([
   'models/song',
   'views/songView',
   'collections/songs',
-  'views/songsView'],
+  'views/songsView',
+  'models/dog'],
 
-  function (_, Backbone, Song, SongView, Songs, SongsView) {
+  function (_, Backbone, Song, SongView, Songs, SongsView, Dog) {
 
     var initialize = function () {
       var song = new Song({
@@ -60,17 +61,15 @@ define([
       var songsView = new SongsView({ el: "#songs", model: songs });
       songsView.render();
 
+      var dog = new Dog();
+
+      dog.walk();
+
     };
+
 
     return {
       initialize: initialize
     };
 
-  })
-
-
-
-
-var dog = new Dog();
-
-dog.walk();
+  });
