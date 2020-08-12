@@ -15,6 +15,15 @@ define([
         genre: "Jazz",
         listeners: 0
       },
+
+      incrementListener: function() {
+        this.set({listeners: this.get("listeners")+1});
+      },
+
+      incrementDownload: function() {
+        this.set({downloads: this.get("downloads")+1});
+      },
+
       // Validation function to ensure each new Song has a title.
       validate: function (attrs) {
         if (!attrs.title)

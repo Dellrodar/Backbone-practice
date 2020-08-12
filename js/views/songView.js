@@ -17,20 +17,24 @@ var SongView = Backbone.View.extend({
 
   // event listeners. One for onClick and another for the bookmark button
   events: {
-    "click": "onClick",
-    "click .bookmark": "onClickBookmark",
+    "click .listen": "onClickListener",
+    "click .download": "onClickDownload",
   },
 
   //This will listen to all click events
-  onClick: function () {
-    song.set("listeners", 1)
-    console.log("Listen CLicked");
+  onClickListener: function (e) {
+    e.stopPropagation();
+    console.log("Listen Clicked");
+    this.model.incrementListener();
+    this.render();
   },
 
   // events bubble up. using stop propagation will ensure only the bookmark event runs
-  onClickBookmark: function (e) {
+  onClickDownload: function (e) {
     e.stopPropagation();
     console.log("Bookmark Clicked")
+    this.model.incrementDownload();
+    this.render();
   },
 
   // renders to a template script made in index.js

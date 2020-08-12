@@ -18,12 +18,18 @@
         <ul id="songs"></ul>
         <script id="songTemplate" type="text/html">
             <%= title %>
-            <button>Listen</button>
-            <button class="bookmark">Bookmark</button>
-            <% if (downloads > 1000){ %>
-                <span class="popular">Popular</span>
+            <button class="listen">Listen</button>
+            <button class="download">Download</button>
+            <% if (downloads > 10){ %>
+                <span class="popular"> Popular</span>
             <% } %>
             </script>
+        <script id="animalTemplate" type="text/html">
+        <%= type %>
+        <% if (walks < 1){ %>
+        <span class=walk> Needs Walking!</span>
+        <% } %>
+        </script>
         <script src="js/lib/require-min.js" data-main="js/main"></script>
     </body>
 </html>
