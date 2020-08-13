@@ -1,6 +1,7 @@
 define([
   'underscore',
   'backbone',
+  'views/navView',
   'models/song',
   'views/songView',
   'collections/songs',
@@ -9,11 +10,14 @@ define([
   'views/animalView',
   'collections/animals',
   'views/animalsView',
-  'models/dog'],
+  'models/dog',
+  'routers/appRouter'],
 
-  function (_, Backbone, Song, SongView, Songs, SongsView, Animal, AnimalView, Animals, AnimalsView, Dog) {
+  function (_, Backbone, NavView, Song, SongView, Songs, SongsView, Animal, AnimalView, Animals, AnimalsView, Dog, AppRouter) {
 
     var initialize = function () {
+
+      var navView = new NavView({ el: "#nav" });
       // var song = new Song({
       //   title: "Blue in Green",
       //   artist: "Miles Davis",
@@ -21,9 +25,6 @@ define([
       // });
 
       // var lastError = song.validationError;
-
-      // var songView = new SongView({ el: "#song", model: song });
-      // songView.render();
 
       //SONG FUNCTIONS
       // New Songs to add to our collection
@@ -63,9 +64,9 @@ define([
         console.log(song);
       });
 
-      // var songsView = new SongsView({ el: "#songs", model: songs });
-      var songsView = new SongsView({ el: "#songs", model: songs});
-      songsView.render();
+      // var songsView = new SongsView({ el: "#switchContainer", model: songs});
+      // songsView.render();
+
       //ANIMAL FUNCTIONS
       //Animals Collection
       var animals = new Animals([
@@ -74,14 +75,17 @@ define([
         new Animal({ id: 3, name: "Alligator" })
       ]);
 
-      var animalsView = new AnimalsView({ el: "#animals", model: animals });
+      // var animalsView = new AnimalsView({ el: "#switchContainer", model: animals });
+      // animalsView.render();
 
       var dog = new Dog();
 
       dog.walk();
 
-    };
+      var router = new AppRouter();
+      Backbone.history.start();
 
+    };
 
     return {
       initialize: initialize
