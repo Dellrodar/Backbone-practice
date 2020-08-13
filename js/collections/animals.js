@@ -1,10 +1,10 @@
 define([
   'underscore',
   'backbone',
-  'model/animal'],
+  'models/animal'],
   function (_, Backbone, Animal) {
-    var Animals = Backbone.Collections.extends({
-      Model: Animal
+    var Animals = Backbone.Collection.extend({
+      model: Animal
     });
     return Animals;
   });

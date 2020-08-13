@@ -8,6 +8,7 @@ define([
   function ($, _, Backbone, Song, Songs, SongView) {
     var SongsView = Backbone.View.extend({
       tagName: "ul",
+      className: "songs",
 
       initialize: function () {
         this.model.on("add", this.onSongAdded, this);

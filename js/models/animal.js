@@ -1,7 +1,8 @@
 define([
   'underscore',
   'backbone'
-], function (_, Backbone) {
+],
+function (_, Backbone) {
   var Animal = Backbone.Model.extend({
     initialize: function () {
       console.log("A new Animal is here!");
@@ -13,7 +14,12 @@ define([
 
     walk: function () {
       console.log("The Animal is walking...");
-    }
+    },
+
+    incrementWalk: function() {
+      this.set({walks: this.get("walks")+1});
+    },
+
   })
   return Animal;
 })

@@ -14,8 +14,9 @@
         <script src="js/lib/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <ul id="song"></ul>
+        <div>
         <ul id="songs"></ul>
+        </div>
         <script id="songTemplate" type="text/html">
             <%= title %>
             <button class="listen">Listen</button>
@@ -24,10 +25,14 @@
                 <span class="popular"> Popular</span>
             <% } %>
             </script>
+        <div>
+            <ul id="animals"></ul>
+        </div>
         <script id="animalTemplate" type="text/html">
-        <%= type %>
-        <% if (walks < 1){ %>
-        <span class=walk> Needs Walking!</span>
+        <%= name %>
+        <button class="walk">Walk this Animal!</button>
+        <% if (walks < 2){ %>
+        <span class="needsWalk"> Needs Walking!</span>
         <% } %>
         </script>
         <script src="js/lib/require-min.js" data-main="js/main"></script>

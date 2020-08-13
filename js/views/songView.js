@@ -6,7 +6,7 @@ define([
 ],
  function($, _, Backbone, Song) {
   // Our first View for the Song Model
-var SongView = Backbone.View.extend({
+  var SongView = Backbone.View.extend({
   tagName: "li",
   className: "song",
 
@@ -21,7 +21,7 @@ var SongView = Backbone.View.extend({
     "click .download": "onClickDownload",
   },
 
-  //This will listen to all click events
+  //This will listen to all "listener" click events
   onClickListener: function (e) {
     e.stopPropagation();
     console.log("Listen Clicked");
@@ -32,7 +32,7 @@ var SongView = Backbone.View.extend({
   // events bubble up. using stop propagation will ensure only the bookmark event runs
   onClickDownload: function (e) {
     e.stopPropagation();
-    console.log("Bookmark Clicked")
+    console.log("Download Clicked")
     this.model.incrementDownload();
     this.render();
   },
@@ -47,7 +47,7 @@ var SongView = Backbone.View.extend({
   }
 });
   return SongView;
-})
+});
 
 
 

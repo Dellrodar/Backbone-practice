@@ -8,6 +8,6 @@ define([
       model: Song
     });
     return Songs;
-  })
+  });
 
 
