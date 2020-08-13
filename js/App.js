@@ -1,7 +1,6 @@
 define([
   'underscore',
   'backbone',
-  'views/navView',
   'models/song',
   'views/songView',
   'collections/songs',
@@ -11,13 +10,12 @@ define([
   'collections/animals',
   'views/animalsView',
   'models/dog',
-  'routers/appRouter'],
+],
 
-  function (_, Backbone, NavView, Song, SongView, Songs, SongsView, Animal, AnimalView, Animals, AnimalsView, Dog, AppRouter) {
+  function (_, Backbone, Song, SongView, Songs, SongsView, Animal, AnimalView, Animals, AnimalsView, Dog) {
 
     var initialize = function () {
 
-      var navView = new NavView({ el: "#nav" });
       // var song = new Song({
       //   title: "Blue in Green",
       //   artist: "Miles Davis",
@@ -27,6 +25,7 @@ define([
       // var lastError = song.validationError;
 
       //SONG FUNCTIONS
+
       // New Songs to add to our collection
       var songs = new Songs([
         new Song({ id: 1, title: "Drowning in my code" }),
@@ -82,8 +81,50 @@ define([
 
       dog.walk();
 
+      //Router Start
+      var AppRouter = Backbone.Router.extend({
+        routes: {
+          "songs": "viewSongs",
+          "animals": "viewAnimals",
+          "persons": "viewPersons",
+          "*other": "defaultRoute"
+        },
+
+        viewSongs: function () {
+          var view = new SongsView({ el: "#switchContainer", model: songs });
+          view.render();
+        },
+
+        viewAnimals: function () {
+          var view = new AnimalsView({ el: "#switchContainer", model: animals });
+          view.render();
+        },
+
+        viewPersons: function () {
+
+        },
+
+        defaultRoute: function () {
+
+        },
+      });
+
       var router = new AppRouter();
       Backbone.history.start();
+
+      var NavView = Backbone.View.extend({
+
+        events: {
+          "click": "onClick"
+        },
+
+        onClick: function (e) {
+          var $li = $(e.target);
+          router.navigate($li.attr("data-url"), { trigger: true });
+        },
+
+      });
+      var navView = new NavView({ el: "#nav" });
 
     };
 
